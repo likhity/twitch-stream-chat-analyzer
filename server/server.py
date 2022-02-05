@@ -32,4 +32,5 @@ def handle_message(data):
   self.analyzer.recieve(data)
 
 if __name__ == "__main__":
-  socketio.run(app)
+  # socketio.run(app)
+  app.run(debug=True)
