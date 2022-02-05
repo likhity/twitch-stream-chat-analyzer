@@ -20,17 +20,15 @@ socketio = SocketIO(app, cors_allowed_origins='*')
 @socketio.on("connection")
 def handle_connection(data):
   print(data.user + '\n')
-  print(data.numMessages + '\n')
+  # print(data.numMessages + '\n')
 
 @socketio.on('message')
 def handle_message(data):
-  print(type(data.msg))
-  print(data.msg)
+  print(data['msg'])
   #at this point we also want to have recieved the numcomments update
   #access the dropdown
   # self.analyzer.setNumComments(numComments)
-  self.analyzer.recieve(data)
+  # self.analyzer.recieve(data)
 
 if __name__ == "__main__":
-  # socketio.run(app)
-  app.run(debug=True)
+  socketio.run(app)
