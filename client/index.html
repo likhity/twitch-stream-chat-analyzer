@@ -4,17 +4,46 @@
     <title>Twich Chat Analyzer</title>
     <meta charset="utf-8">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="styles.css">
+    <script>  
+        function setNumComments() {  
+        var mylist = document.getElementById("myList");  
+        document.getElementById("favourite").value = mylist.options[mylist.selectedIndex].text;  
+        }
+        </script>  
 </head>
 <body>
-    <div class="container mt-3 p-3" style="width: 400px;">
-        <h4 class="text-center">Twitch Chat Analyzer</h4>
-        <p class="mt-3 px-3 d-flex justify-content-center" style="font-size: 14px;">Check to see if the stream has positive or negative comments</p>
-        <div class="input-group mt-3 mb-3 px-3" style="width: 370px;">
-            <input type="text" class="form-control" style="font-size: 12px;;" placeholder="Input your Twitch Stream Link:">
-            <button class="btn btn-outline-secondary" style="background-color: #9146FF; color:#fff;" type="button" id="start_analyze">Start Analyzing</button>
+    <div class="tab__content">
+        <div id="start__tab" data-tab-content class="active">
+            <div class="container mt-3 p-3" style="width: 400px;">
+                <h4 class="text-center">Twitch Chat Analyzer</h4>
+                <p class="mt-3 px-3 d-flex justify-content-center" style="font-size: 14px;">Check the overall positivity of the comments in your stream.</p>
+                <div class="input-group mt-3 mb-3 px-3" style="width: 370px;">
+                    <input type="text" class="form-control" style="font-size: 12px;;" placeholder="Input your channel name:" id="channel-input">
+                    <button class="btn btn-outline-secondary" style="background-color: #9146FF; color:#fff;" type="button" id="start-analyze" data-tab-content="#analyze__result">Start Analyzing</button>
+                </div>
+            </div>
+        </div>
+        <div id="anaylze__result" data-tab-content>
+            
+            
         </div>
     </div>
+        <!-- Example single danger button -->
+    <div class="btn-group" id="Dropdown button">
+        <button type="button" class="btn btn-secondary btn-sm dropdown-toggle" type="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+        Dropdown button
+        </button>
+        <div class="dropdown-menu">
+        <a class="dropdown-item" href="#">10</a>
+        <a class="dropdown-item" href="#">50</a>
+        <a class="dropdown-item" href="#">100</a>
+        <!-- <div class="dropdown-divider"></div> -->
+        <a class="dropdown-item" href="#">500</a>
+        <a class="dropdown-item" href="#">1000</a>
+        </div>
+    </div>
+    <script src="tmi.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.js" integrity="sha512-q/dWJ3kcmjBLU4Qc47E4A9kTB4m3wuTY7vkFJDTZKjTs8jhyGQnaUrxa0Ytd0ssMZhbNua9hE+E7Qv1j+DyZwA==" crossorigin="anonymous"></script>
+    <script src="script.js"></script>
 </body>
-<script src="script.js"></script>
 </html>

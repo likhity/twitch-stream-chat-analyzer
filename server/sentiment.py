@@ -2,52 +2,58 @@ import pandas as pd
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from nltk.corpus import twitter_samples 
+from emoji import demojize
+import re
+from statistics import mean
 
+class Analyzer:
+    def __init__(self):
+        self.buff = []
+        # nltk.download('vader_lexicon')
+        self.analyzer = SentimentIntensityAnalyzer()
+        #initialize neutral sentiment - Ranges from -1 to 1
+        self.sentiment = 0
+        self.numComments = 10
 
+    def cleanMsg(self, msg):
+        msg = demojize(msg)
+        message = msg.split(' ')[1:]
+        return message
+
+    def recieve(self, buff):
+        msg = self.cleanMsg(buff)
+        print(msg)
+        scores = self.analyzer.polarity_scores(msg)
+        # an overall score that combines pos, neg, and neutral
+        score = float(scores['compound'])
+        if len(buff) > self.numComments:
+            self.buff = []
+        self.buff.append(score)
+        self.sentiment = mean(self.buff)
+
+    def getSentiment(self):
+        return self.sentiment
+    
+    def setNumComments(self, num):
+        self.numComments = num
+
+    def getNumComments(self):
+        return self.numComments
+
+analyzer = Analyzer()
 strings = ["i fucking hate this stream", "omg this is so funny", 
-"hahahaha", "sadge : (", "please respond", "how's the weather today?"]
+"hahahaha", "sadge :(", "please respond", "how's the weather today?"]
 
-analyzer = SentimentIntensityAnalyzer()
-
-
-
-# nltk.download('twitter_samples')
-# nltk.download('vader_lexicon')
- 
-# # get 5000 posivie and negative tweets
-# all_positive_tweets = twitter_samples.strings('positive_tweets.json')
-# all_negative_tweets = twitter_samples.strings('negative_tweets.json')
- 
-# analyzer = SentimentIntensityAnalyzer()
-# # positive
-# print(all_positive_tweets[100])
-# analyzer.polarity_scores(all_positive_tweets[100])
-# print(all_negative_tweets[20])
-# analyzer.polarity_scores(all_negative_tweets[20])
-# my_labels = [1]*len(all_positive_tweets)
-# negative_labels = [0]*len(all_negative_tweets)
-# my_labels.extend(negative_labels)
- 
-# all_positive_tweets.extend(all_negative_tweets)
- 
-# df = pd.DataFrame({'tweets' : all_positive_tweets, 
-#                    'my_labels' : my_labels})
-# df['neg'] = df['tweets'].apply(lambda x:analyzer.polarity_scores(x)['neg'])
-# df['neu'] = df['tweets'].apply(lambda x:analyzer.polarity_scores(x)['neu'])
-# df['pos'] = df['tweets'].apply(lambda x:analyzer.polarity_scores(x)['pos'])
-# df['compound'] = df['tweets'].apply(lambda x:analyzer.polarity_scores(x)['compound'])
-
-
-# print(df)
-# df.groupby('my_labels')['compound'].describe()
-# df.boxplot(by='my_labels', column='compound', figsize=(12,8))
+for string in strings:
+    analyzer.recieve(string)
+    print(analyzer.getSentiment())
+    print("\n")
 
 
 
 """
 pip install vaderSentiment
-pip install django-filter
-pip install djangorestframework
+pip install nltk
 pip install markdown 
 pip install pandas matplotlib tensorflow
 """

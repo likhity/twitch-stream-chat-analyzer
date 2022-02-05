@@ -1,11 +1,11 @@
 {
-  "name": "Covid-19 Stats UK",
+  "name": "Twitch Chat Analyzer",
   "version": "1.0.0",
-  "description": "latest covid data of UK",
+  "description": "Analyze the positivity of a twitch stream",
   "manifest_version": 3,
-  "author": "Sampurna Chapagain",
+  "author": "Likhit Vyas Yarramsetti, Victor, Elle, Manav",
   "action":{
       "default_popup": "index.html",
-      "default_title": "Latest Covid Report"
+      "default_title": "Analyze a Stream"
   }
 }

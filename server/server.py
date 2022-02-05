@@ -1,22 +1,21 @@
+from flask import Flask, request
+from flask_restful import Api, Resource
+from flask_socketio import SocketIO
 
-import socket
+app = Flask(__name__)
+api = Api(app)
+socketio = SocketIO(app)
 
-server = 'irc.chat.twitch.tv'
-port = 6697
-nickname = 'likhity'
-token = "oauth:e8dbow1jybxddssj9778q5ne9r32lx"
-channel = '#ninja'
+class HelloWorld(Resource):
+  def get(self):
+    print(request.form['channel'])
+    return { "data": "Hello World!" }
 
-sock = socket.socket()
+api.add_resource(HelloWorld, "/helloworld")
 
-sock.connect((server, port))
+@socketio.on('message')
+def handle_message(data):
+  print('recieved message: ' + data)
 
-sock.send(f"PASS {token}\n".encode('utf-8'))
-sock.send(f"NICK {nickname}\n".encode('utf-8'))
-sock.send(f"JOIN {channel}\n".encode('utf-8'))
-
-resp = sock.recv(2048).decode('utf-8')
-
-resp
-
-sock.close()
+if __name__ == "__main__":
+  app.run(debug=True)
