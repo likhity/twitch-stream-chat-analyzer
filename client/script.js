@@ -24,11 +24,12 @@ chrome.tabs.query({active:true},function(tab){
 });
 
 //
-let client;
+let tmiClient;
 let socket;
 
-const startAnalyzingButton = document.getElementById("start-analyze");
-const channelNameInput = document.getElementById("channel-input");
+const startAnalyzingButton = document.querySelector("#start-analyze");
+const channelNameInput = document.querySelector("#channel-input");
+const numberMessagesInput = document.getElementById("number-messages-input");
 
 
 channelNameInput.addEventListener('keydown', (e) => {
@@ -42,7 +43,7 @@ startAnalyzingButton.addEventListener('click', (e) => {
 })
 
 function submit(channelName) {
-  client = new tmi.Client({
+  tmiClient = new tmi.Client({
     connection: {
       secure: true,
       reconnnect: true,
@@ -50,18 +51,33 @@ function submit(channelName) {
     channels: [channelName]
   })
   
-  client.connect().then(() => {
+  tmiClient.connect().then(() => {
     console.log(`Listening for messages in ${channelName}...`);
   });
 
   socket = io("http://127.0.0.1:5000/");
 
   socket.on("connect", () => {
-    socket.emit("my event", { data: "Im connected" });
+    socket.emit("connection", { user: channelName, numMessages: parseInt(numberMessagesInput.value) });
+    tmiClient.on('message', (channel, tags, message, self) => {
+      socket.emit("message", { msg: `${tags['display-name']}: ${message}`})
+    })
   })
   
-  client.on('message', (channel, tags, message, self) => {
-    console.log(`${tags['display-name']}: ${message}`)
-  })
 }
 
+// set number of comments in the bootstrap dropdown menu to the right
+function setNumComments() {  
+  var mylist = document.getElementById("Dropdown button");  
+  document.getElementById("favourite").value = mylist.options[mylist.selectedIndex].text;  
+  }
+
+function createRadialGradient(){
+  var c = document.getElementById("newCanvas");
+  var ctxt = c.getContext("2d");
+  var linegrd = ctxt.createRadialGradient(75, 50, 5, 90, 60, 100);
+  linegrd.addColorStop(0, "#FFFFFF");
+  linegrd.addColorStop(1, "#66CC00");
+  ctxt.fillStyle = linegrd;
+  ctxt.fillRect(20, 10, 200, 150);
+}

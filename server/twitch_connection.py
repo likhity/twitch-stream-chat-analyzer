@@ -4,7 +4,7 @@ server = 'irc.chat.twitch.tv'
 port = 6667
 nickname = 'likhity'
 token = "oauth:e8dbow1jybxddssj9778q5ne9r32lx"
-channel = '#cohhcarnage'
+channel = '#clix'
 
 twitchChatConnection = socket.socket()
 
