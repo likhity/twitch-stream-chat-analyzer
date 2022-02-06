@@ -36,10 +36,10 @@ class Analyzer:
     gets a message and adds it to the buffer.
     it also updates the overall sentiment 
     """
-    def recieve(self, msg, streamer):
+    def recieve(self, msg):
         if self.cleanMessage:
             msg = self.cleanMsg(msg)
-        print(msg) #comment this if you don't want verbose output
+        # print(msg) #comment this if you don't want verbose output
         scores = self.analyzer.polarity_scores(msg)
         # an overall score that combines pos, neg, and neutral
         score = float(scores['compound'])
@@ -62,9 +62,6 @@ class Analyzer:
         value = sigmoid(value)
         # now range is 0 to 100
         return int(value*100+ 0.5)
-
-    # def getSentimentValue(self) -> float:
-    #     return self.normalize(self.sentiment)
 
     def getSentiment(self) -> int:
         return self.normalize(self.sentiment)

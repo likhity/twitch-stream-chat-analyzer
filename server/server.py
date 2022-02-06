@@ -21,9 +21,8 @@ def handle_message(data):
   #at this point we also want to have recieved the numcomments update
   #access the dropdown
   msg = data['msg']
-  analyzer.recieve(msg, data['streamer'])
+  analyzer.recieve(msg)
   emit("percentage-update", analyzer.getSentiment())
-  print(data['streamer'] + " " + str(analyzer.getSentiment()))
   
 
 @socketio.on('changeNumMessages')
