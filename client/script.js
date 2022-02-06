@@ -49,11 +49,11 @@ function submit(channelName) {
 
   socket.on("connect", () => {
     socket.emit("connection", {
-      user: channelName,
+      streamer: channelName,
       numMessages: 10,
     });
     tmiClient.on("message", (channel, tags, message, self) => {
-      socket.emit("message", { msg: `${tags["display-name"]}: ${message}`, streamer: channelName });
+      socket.emit("message", { msg: `${tags["display-name"]}: ${message}` });
     });
   });
 
@@ -70,8 +70,12 @@ function submit(channelName) {
     progressBar.style.setProperty("--value", data);
 
     // update the background color
-    updateBackground2(data);
+    updateBackground(data);
   });
+
+  socket.on("test-event", (data) => {
+    console.log(data);
+  })
 
   // update the channel name in analysis page
   const capChannel = channelName.charAt(0).toUpperCase() + channelName.slice(1);
