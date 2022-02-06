@@ -23,7 +23,7 @@ class Analyzer:
         #initialize neutral sentiment - Ranges from -1 to 1
         self.sentiment = 0.0
         self.numComments = 10
-        self.cleanMessage = 0
+        self.cleanMessage = 1
 
     """
     formats the message
@@ -31,7 +31,7 @@ class Analyzer:
     def cleanMsg(self, msg):
         msg = demojize(msg)
         message = msg.split(' ')[1:]
-        return message
+        return ' '.join(message)
     """
     gets a message and adds it to the buffer.
     it also updates the overall sentiment 
@@ -39,13 +39,10 @@ class Analyzer:
     def recieve(self, msg):
         if self.cleanMessage:
             msg = self.cleanMsg(msg)
-        # print(msg) #comment this if you don't want verbose output
+        print(msg) #comment this if you don't want verbose output
         scores = self.analyzer.polarity_scores(msg)
         # an overall score that combines pos, neg, and neutral
         score = float(scores['compound'])
-        # we got a completely neutral message (e.g. a bot command), ignore it
-        # if score == 0.0:
-            # return
         #remove the first element of the buffer if it overflows
         if len(self.buff) > self.numComments:
             del self.buff[0]
@@ -57,14 +54,19 @@ class Analyzer:
     """
     def normalize(self, value) -> int:
         # makes the values wider ranging
-        value *= 5
+        value *= 6
         # this returns a value from 0 to 1
         value = sigmoid(value)
+        rounded = int(value*100+ 0.5)
+        if rounded > 100:
+            rounded = 99
         # now range is 0 to 100
-        return int(value*100+ 0.5)
+        return rounded
 
     def getSentiment(self) -> int:
-        return self.normalize(self.sentiment)
+        var = self.normalize(self.sentiment)
+        print(var)
+        return var
 
     def setNumComments(self, num):
         self.numComments = num
