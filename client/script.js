@@ -1,9 +1,7 @@
 
 // get the current url of the page the user is on
 chrome?.tabs?.query({ active: true }, function (tabs) {
-  console.log(tabs);
   const tabUrls = tabs.map(tab => tab.url);
-  console.log(tabUrls);
   const urlStrings = tabUrls.find(tabUrl => {
     return tabUrl?.match("twitch.tv") != null
   }).split("/");
@@ -18,6 +16,7 @@ chrome?.tabs?.query({ active: true }, function (tabs) {
 let tmiClient;
 let socket;
 let sentiment = ".50";
+let connection = false;
 
 const startAnalyzingButton = document.querySelector("#start-analyze");
 const channelNameInput = document.querySelector("#channel-input");
@@ -53,7 +52,11 @@ function submit(channelName) {
   });
 
   
-  socket = io("http://127.0.0.1:5000/");
+  socket = io("http://127.0.0.1:5000/", {
+    extraHeaders: {
+      "Access-Control-Allow-Origin": "*",
+    }
+  });
   
   socket.on("connect", () => {
     socket.emit("connection", {
@@ -68,6 +71,7 @@ function submit(channelName) {
   // data is now an int
   socket.on("percentage-update", (data) => {
     // update the percentage itself displayed
+    connection = true;
     var r = document.querySelector(":root");
     var percentString = String(data);
     r.style.setProperty("--percent", percentString);
@@ -79,11 +83,8 @@ function submit(channelName) {
     
     // update the background color
     updateBackground(data);
+    updateBar(data);
   });
-  
-  socket.on("test-event", (data) => {
-    console.log(data);
-  })
   
   // update the channel name in analysis page
   const capChannel = channelName.charAt(0).toUpperCase() + channelName.slice(1);
@@ -103,7 +104,7 @@ function submit(channelName) {
   })
 
   setTimeout(() => {
-    if (document.getElementById("percentage").textContent.trim() === '50') {
+    if (!connection) {
       document.getElementById("streaming-alert").classList.remove("d-none");
       document.getElementById("streaming-alert").querySelector("button").addEventListener("click", () => {
         document.getElementById("streaming-alert").remove()
