@@ -1,7 +1,12 @@
 
 // get the current url of the page the user is on
 chrome?.tabs?.query({ active: true }, function (tabs) {
-  const urlStrings = tabs[0].url.split("/");
+  console.log(tabs);
+  const tabUrls = tabs.map(tab => tab.url);
+  console.log(tabUrls);
+  const urlStrings = tabUrls.find(tabUrl => {
+    return tabUrl?.match("twitch.tv") != null
+  }).split("/");
   if (urlStrings.some(str => str.includes('twitch.tv'))) {
     submit(urlStrings[urlStrings.length - 1])
   }
@@ -45,8 +50,9 @@ function submit(channelName) {
     console.log(`Listening for messages in ${channelName}...`);
   });
 
+  
   socket = io("http://127.0.0.1:5000/");
-
+  
   socket.on("connect", () => {
     socket.emit("connection", {
       streamer: channelName,
@@ -56,7 +62,7 @@ function submit(channelName) {
       socket.emit("message", { msg: `${tags["display-name"]}: ${message}` });
     });
   });
-
+  
   // data is now an int
   socket.on("percentage-update", (data) => {
     // update the percentage itself displayed
@@ -64,22 +70,33 @@ function submit(channelName) {
     var percentString = String(data);
     r.style.setProperty("--percent", percentString);
     document.getElementById("percentage").innerHTML = percentString;
-
+    
     // update the progress pie circle
     const progressBar = document.querySelector('div[role="progressbar"]');
     progressBar.style.setProperty("--value", data);
-
+    
     // update the background color
     updateBackground(data);
   });
-
+  
   socket.on("test-event", (data) => {
     console.log(data);
   })
-
+  
   // update the channel name in analysis page
   const capChannel = channelName.charAt(0).toUpperCase() + channelName.slice(1);
   document.getElementById("channel").textContent = capChannel;
+
+  const numMessagesInput = document.getElementById("num-messages");
+  const updateNumberButton = document.getElementById("update-number");
+  numMessagesInput.addEventListener("keydown", (e) => {
+    if (e.key === "Enter") {
+      socket.emit("changeNumMessages", { numMessages: numMessagesInput.value || "10" })
+    }
+  })
+  updateNumberButton.addEventListener("click", () => {
+    socket.emit("changeNumMessages", { numMessages: numMessagesInput.value || "10" })
+  })
 }
 
 function returnNumComments() {
