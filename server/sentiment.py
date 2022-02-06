@@ -1,9 +1,15 @@
+# source: https://predictivehacks.com/how-to-run-sentiment-analysis-in-python-using-vader/
 import nltk
 from nltk.sentiment.vader import SentimentIntensityAnalyzer
 from emoji import demojize
+import numpy as np
 from statistics import mean
 
-# source: https://predictivehacks.com/how-to-run-sentiment-analysis-in-python-using-vader/
+
+''' It returns 1/(1+exp(-x)). where the values lies between zero and one '''
+def sigmoid(x):
+    return 1/(1+np.exp(-x))
+
 
 """
     A class that stores the previous x messages from Twitch chat
@@ -30,13 +36,16 @@ class Analyzer:
     gets a message and adds it to the buffer.
     it also updates the overall sentiment 
     """
-    def recieve(self, msg):
+    def recieve(self, msg, streamer):
         if self.cleanMessage:
             msg = self.cleanMsg(msg)
-        print(msg)
+        print(msg) #comment this if you don't want verbose output
         scores = self.analyzer.polarity_scores(msg)
         # an overall score that combines pos, neg, and neutral
         score = float(scores['compound'])
+        # we got a completely neutral message (e.g. a bot command), ignore it
+        # if score == 0.0:
+            # return
         #remove the first element of the buffer if it overflows
         if len(self.buff) > self.numComments:
             del self.buff[0]
@@ -46,35 +55,22 @@ class Analyzer:
     """
     takes in a float between -1 and 1 and returns a float from 0 to 1
     """
-    def normalize(self, value) -> float:
-        value += 1
-        value /= 2
-        return value
+    def normalize(self, value) -> int:
+        # makes the values wider ranging
+        value *= 5
+        # this returns a value from 0 to 1
+        value = sigmoid(value)
+        # now range is 0 to 100
+        return int(value*100+ 0.5)
 
-    def getSentiment(self) -> float:
+    # def getSentimentValue(self) -> float:
+    #     return self.normalize(self.sentiment)
+
+    def getSentiment(self) -> int:
         return self.normalize(self.sentiment)
-    
+
     def setNumComments(self, num):
         self.numComments = num
 
     def getNumComments(self) -> int:
         return self.numComments
-
-analyzer = Analyzer()
-strings = ["i fucking hate this stream", "omg this is so funny", 
-"hahahaha", "sadge :(", "please respond", "how's the weather today?"]
-
-for string in strings:
-    analyzer.recieve(string)
-    print(analyzer.getSentiment())
-    print("\n")
-
-
-
-"""
-to run:
-pip install vaderSentiment
-pip install nltk
-"""
-
-

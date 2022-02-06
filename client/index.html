@@ -7,121 +7,73 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css"
       rel="stylesheet"
     />
-    <link rel="stylesheet" href="/client/style.css" />
+    <link rel="stylesheet" href="/styles.css" />
     <script src="tmi.min.js" defer></script>
     <script src="socket.io.js" defer></script>
     <script type="text/javascript" src="script.js" defer></script>
   </head>
   <body>
-    <div class="tab__content">
+    <div class="title-screen">
       <div class="container mt-3 p-3" style="width: 400px">
         <h4 class="text-center">Twitch Chat Analyzer</h4>
         <p
           class="mt-3 px-3 d-flex justify-content-center"
           style="font-size: 14px"
         >
-          Check the overall positivity of the comments in your stream.
+          Check to see if the stream has positive or negative comments
         </p>
         <div class="input-group mt-3 mb-3 px-3" style="width: 370px">
           <input
             type="text"
             class="form-control"
             style="font-size: 12px"
-            placeholder="Input your channel name:"
+            placeholder="Channel Name"
             id="channel-input"
           />
           <button
             class="btn btn-outline-secondary"
             style="background-color: #9146ff; color: #fff"
             type="button"
+            onclick="change_to_second_screen()"
             id="start-analyze"
-            data-tab-content="#analyze__result"
           >
             Start Analyzing
           </button>
-          <div class="d-flex">
-            <p class="mr-3">Number of Messages to Analyze At a Time</p>
-            <input
-              type="text"
-              class="form-control"
-              style="font-size: 12px"
-              placeholder="ie. 10"
-              id="number-messages-input"
-            />
-          </div>
         </div>
       </div>
-      <!-- <div id="anaylze__result" data-tab-content> -->
-      <!-- <div class="col-xl-3 col-lg-6 mb-4"> -->
-      <!-- <h2>Analyzing Chat Stream</h2> -->
-      <!--  -->
-      <!-- <div class="bg-white rounded-lg p-5 shadow"> -->
-      <!-- <h2 class="h6 font-weight-bold text-center mb-4">Positivity</h2> -->
-      <!-- active if received data is 0-30 percent -->
-      <!-- <div class="progress mx-auto" data-value="25"> -->
-      <!-- <span class="progress-left"> -->
-      <!-- <span class="progress-bar border-danger"></span> -->
-      <!-- </span> -->
-      <!-- <span class="progress-right"> -->
-      <!-- <span class="progress-bar border-danger"></span> -->
-      <!-- </span> -->
-      <!-- <div -->
-      <!-- class=" -->
-      <!-- progress-value -->
-      <!-- w-100 -->
-      <!-- h-100 -->
-      <!-- rounded-circle -->
-      <!-- d-flex -->
-      <!-- align-items-center -->
-      <!-- justify-content-center -->
-      <!-- " -->
-      <!-- > -->
-      <!-- <div class="h2 font-weight-bold"> -->
-      <!-- 25<sup class="small">%</sup> -->
-      <!-- </div> -->
-      <!-- </div> -->
-      <!-- </div> -->
-      <!--active if 31-69-->
-      <!--
-                  <div class="progress mx-auto" data-value='31'>
-                    <span class="progress-left">
-                                  <span class="progress-bar border-warning"></span>
-                    </span>
-                    <span class="progress-right">
-                                  <span class="progress-bar border-warning"></span>
-                    </span>
-                    <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
-                      <div class="h2 font-weight-bold">76<sup class="small">%</sup></div>
-                    </div>
-                  </div>-->
-      <!--active if 70-100-->
-      <!--
-                  <div class="progress mx-auto" data-value='76'>
-                    <span class="progress-left">
-                                  <span class="progress-bar border-success"></span>
-                    </span>
-                    <span class="progress-right">
-                                  <span class="progress-bar border-success"></span>
-                    </span>
-                    <div class="progress-value w-100 h-100 rounded-circle d-flex align-items-center justify-content-center">
-                      <div class="h2 font-weight-bold">76<sup class="small">%</sup></div>
-                    </div>
-                  </div>-->
-
-      <!-- <div class="row text-center mt-4"> -->
-      <!-- </div> -->
-      <!-- <button -->
-      <!-- type="button" -->
-      <!-- class="btn btn-secondary btn-sm mt-5" -->
-      <!-- style="background-color: #9146ff; color: #fff" -->
-      <!-- data-tab-content="#start-tab" -->
-      <!-- > -->
-      <!-- Stop Analyzing -->
-      <!-- </button> -->
-      <!-- </div> -->
-      <!-- </div> -->
-      <!-- </div> -->
-      <!-- </div> -->
+    </div>
+    <div class="analysis-tab" style="display: none;">
+      <div class="container mt-3 p-3 main-body-container" style="width: 400px">
+        <p class="text-center">Analyzing <span id="channel">??</span>'s Chat Stream </p>
+        <div>
+          <div class="indicators">
+            <div role="progressbar" style="--value:50"></div>
+            <div class="incicator-percentage">
+              <h1 class="text-center percentage" ><span id="percentage">50</span>%</h1>
+              <p>Positivity</p>
+            </div>
+        </div>
+        <div class="num-messages text-center mt-2">
+          <p>Number of Recent Messages To Analyze</p>
+          <input
+            type="number"
+            name="num-messages"
+            id="num-messages"
+            min="10"
+            max="500"
+          />
+        </div>
+        <div class="text-center mt-4">
+          <button
+              class="btn btn-outline-secondary px-3"
+              style="background-color: #9146ff; color: #fff; border-radius: 12px; font-size: 12px;"
+              type="button"
+              id="pause_analyze"
+          >
+              Update Number
+          </button>
+        </div>
+      </div>
     </div>
   </body>
 </html>

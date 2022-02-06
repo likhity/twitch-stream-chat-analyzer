@@ -1,0 +1,175 @@
+:root {
+  --percent: "50";
+  /* --background: radial-gradient(#e66465, #9198e5); */
+
+  --color-1-h: 130;
+  --color-1-s: 45%;
+  --color-1-l: 69%;
+
+  --color-2-h: 0;
+  --color-2-s: 63%;
+  --color-2-l: 80%;
+}
+
+[data-tab-content] {
+  display: none;
+}
+.active[data-tab-content] {
+  display: block;
+}
+
+/*
+FIGMA CSS
+
+
+.frame1{
+
+position: absolute;
+width: 500px;
+height: 414px;
+left: 0px;
+top: 0px;
+
+background: #BEFFB9;
+box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+
+}
+
+.frame9{
+
+position: absolute;
+width: 299px;
+height: 65px;
+left: 101px;
+top: 9px;
+
+}
+
+.frame11{
+
+  position: absolute;
+width: 173px;
+height: 180px;
+left: 55px;
+top: 91px;
+
+
+}
+
+.frame10{
+  
+  position: absolute;
+width: 228px;
+height: 190px;
+left: 221px;
+top: 63px;
+
+
+}
+
+.frame12{
+
+position: absolute;
+width: 279px;
+height: 56px;
+left: 77px;
+top: 275px;
+
+
+
+}
+
+.frame6{
+
+  position: absolute;
+width: 129px;
+height: 38px;
+left: 177px;
+top: 351px;
+
+
+
+}
+
+.frame13{
+  position: absolute;
+width: 70px;
+height: 56px;
+left: 337px;
+top: 274px;
+}
+
+
+
+
+*/
+
+div[role="progressbar"] {
+  margin: 0;
+  --size: 6rem;
+  --fg: #9146ff;
+  --bg: rgb(192, 192, 192);
+  --pgPercentage: var(--value);
+  width: var(--size);
+  height: var(--size);
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: radial-gradient(
+      closest-side,
+      white 80%,
+      transparent 0 99.9%,
+      white 0
+    ),
+    conic-gradient(var(--fg) calc(var(--pgPercentage) * 1%), var(--bg) 0);
+  font-family: Helvetica, Arial, sans-serif;
+  font-size: calc(var(--size) / 5);
+  color: var(--fg);
+  transform: scaleX(-1);
+}
+
+/* demo */
+body {
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+
+h1.percentage {
+  font-weight: 100;
+  font-size: 4rem;
+}
+
+.main-body-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.num-messages {
+  display: flex;
+  align-items: center;
+}
+
+.num-messages p {
+  font-size: 0.75rem;
+  margin: 0;
+  margin-right: 10px;
+}
+
+.indicators {
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.incicator-percentage {
+  display: flex;
+  flex-direction: column;
+}
+
+.incicator-percentage p {
+  padding-left: 7px;
+}

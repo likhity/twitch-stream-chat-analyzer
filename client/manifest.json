@@ -1,11 +1,12 @@
 {
   "name": "Twitch Chat Analyzer",
+  "permissions": ["activeTab"],
   "version": "1.0.0",
   "description": "Analyze the positivity of a twitch stream",
   "manifest_version": 3,
   "author": "Likhit Vyas Yarramsetti, Victor, Elle, Manav",
-  "action":{
-      "default_popup": "index.html",
-      "default_title": "Analyze a Stream"
+  "action": {
+    "default_popup": "index.html",
+    "default_title": "Analyze a Stream"
   }
 }
