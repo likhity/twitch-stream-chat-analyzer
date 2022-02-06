@@ -173,3 +173,18 @@ h1.percentage {
 .incicator-percentage p {
   padding-left: 7px;
 }
+
+.may-not-be-streaming-alert p {
+  margin: 0;
+}
+
+.may-not-be-streaming-alert {
+  display: flex;
+  width: auto;
+  justify-content: space-around;
+  align-items: center;
+}
+
+.alert {
+  padding: 0.5rem;
+}

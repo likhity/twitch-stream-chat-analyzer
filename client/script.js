@@ -8,7 +8,9 @@ chrome?.tabs?.query({ active: true }, function (tabs) {
     return tabUrl?.match("twitch.tv") != null
   }).split("/");
   if (urlStrings.some(str => str.includes('twitch.tv'))) {
-    submit(urlStrings[urlStrings.length - 1])
+    if ((urlStrings[urlStrings.length - 1] !== '')) {
+      submit(urlStrings[urlStrings.length - 1])
+    }
   }
 });
 
@@ -69,7 +71,7 @@ function submit(channelName) {
     var r = document.querySelector(":root");
     var percentString = String(data);
     r.style.setProperty("--percent", percentString);
-    document.getElementById("percentage").innerHTML = percentString;
+    document.getElementById("percentage").textContent = percentString;
     
     // update the progress pie circle
     const progressBar = document.querySelector('div[role="progressbar"]');
@@ -85,7 +87,9 @@ function submit(channelName) {
   
   // update the channel name in analysis page
   const capChannel = channelName.charAt(0).toUpperCase() + channelName.slice(1);
-  document.getElementById("channel").textContent = capChannel;
+  document.querySelectorAll(".channel").forEach(div => {
+    div.textContent = capChannel;
+  })
 
   const numMessagesInput = document.getElementById("num-messages");
   const updateNumberButton = document.getElementById("update-number");
@@ -97,6 +101,15 @@ function submit(channelName) {
   updateNumberButton.addEventListener("click", () => {
     socket.emit("changeNumMessages", { numMessages: numMessagesInput.value || "10" })
   })
+
+  setTimeout(() => {
+    if (document.getElementById("percentage").textContent.trim() === '50') {
+      document.getElementById("streaming-alert").classList.remove("d-none");
+      document.getElementById("streaming-alert").querySelector("button").addEventListener("click", () => {
+        document.getElementById("streaming-alert").remove()
+      })
+    }
+  }, 10000)
 }
 
 function returnNumComments() {

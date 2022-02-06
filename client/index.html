@@ -44,7 +44,15 @@
     </div>
     <div class="analysis-tab" style="display: none;">
       <div class="container mt-3 p-3 main-body-container" style="width: 400px">
-        <p class="text-center">Analyzing <span id="channel">??</span>'s Chat Stream </p>
+        <p class="text-center">Analyzing <span class="channel">??</span>'s Chat Stream </p>
+        <div class="alert alert-danger alert-dismissible may-not-be-streaming-alert d-none" id="streaming-alert">
+          <p>
+            <span class="channel"></span> may not be streaming right now. 
+          </p>
+          <button type="button" class="btn close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
         <div>
           <div class="indicators">
             <div role="progressbar" style="--value:50"></div>
