@@ -27,8 +27,11 @@ var analysisTab = document.querySelector(".analysis-tab");
 
   
 
-
-socket = io("http://127.0.0.1:5000/");
+socket = io("http://127.0.0.1:5000/", {
+  extraHeaders: {
+    "Access-Control-Allow-Origin": "*",
+  }
+});
 
 channelNameInput.addEventListener("keydown", (e) => {
   if (e.key == "Enter") {
@@ -55,16 +58,17 @@ function submit(channelName) {
 
   tmiClient.connect().then(() => {
     console.log(`Listening for messages in ${channelName}...`);
-    document.getElementById("num-messages").value = 10;
-    document.getElementById("num-messages").addEventListener("change", (e) => {
-      var num = document.getElementById("num-messages").value;
-      console.log(num);
-      socket.emit("changeNumMessages", {
-        numMessages: num,
-      });
-    });
   });
 
+  document.getElementById("num-messages").value = 10;
+  document.getElementById("num-messages").addEventListener("change", (e) => {
+    var num = document.getElementById("num-messages").value;
+    console.log(num);
+    socket.emit("changeNumMessages", {
+      user: "",
+      numMessages: num,
+    });
+  });
 
   socket.on("connect", () => {
     socket.emit("connection", {
@@ -138,10 +142,10 @@ function updateBackground() {
   // document.body.style.backgroundColor = color;
   document.body.style = `background-image : radial-gradient(${color},${lightcolor});`;
   // console.log(`hsl(${hue},${saturation}%,${alpha}%)`);
-
 }
+
 function animateCircle(){
-  // var progressBar = document.querySelector('div[role="progressbar"]');
+  var progressBar = document.querySelector('div[role="progressbar"]');
   // var curr = progressBar.style.value;
   // console.log(curr);
 
