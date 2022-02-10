@@ -52,11 +52,7 @@ function submit(channelName) {
   });
 
   
-  socket = io("http://127.0.0.1:5000/", {
-    extraHeaders: {
-      "Access-Control-Allow-Origin": "*",
-    }
-  });
+  socket = io("http://127.0.0.1:5000/");
   
   socket.on("connect", () => {
     socket.emit("connection", {
@@ -83,7 +79,6 @@ function submit(channelName) {
     
     // update the background color
     updateBackground(data);
-    updateBar(data);
   });
   
   // update the channel name in analysis page
