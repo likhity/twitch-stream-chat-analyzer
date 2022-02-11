@@ -85,6 +85,7 @@ We didn't eat, or sleep really, and kept working on this project trying to get a
 
 We unfortunately didn't win but we all learned a lot. All of us went outside of our comfort zones, challenged ourselves, and worked with technologies and tools we never worked with.
 
-However, the most important lesson we learned or at least I did, can't speak for everyone: hackathons are really bad unless you go in person.
+However, the most important lesson we learned (or at least I did, can't speak for everyone) is: 
+hackathons are really bad unless you go in person.
 
 *README authored by likhity*
