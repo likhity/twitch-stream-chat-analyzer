@@ -49,9 +49,11 @@ $ python server.py
 
 This will start the server on your local machine at [http://127.0.0.1:5000/]. **Do not** close the terminal.
 
-Now, load the extension on chrome.
+Now, it's time to load the extension on chrome.
 
 Go to [chrome://extensions](chrome://extensions).
+
+![image](/README_assets/url.PNG)
 
 Make sure developer mode is on.
 
