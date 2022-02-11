@@ -41,13 +41,13 @@ $ pip install Flask-Cors
 
 Clone the repository and start the server.
 ```bash
-$ git clone https://github.com/likhity/hacksc.git
-$ cd hacksc
+$ git clone https://github.com/likhity/twitch-stream-chat-analyzer.git
+$ cd twitch-stream-chat-analyzer
 $ cd server
 $ python server.py
 ```
 
-This will start the server on your local machine at [http://127.0.0.1:5000/]. **Do not** close the terminal.
+This will start the server on your local machine at http://127.0.0.1:5000/. **Do not** close the terminal.
 
 Now, it's time to load the extension on chrome.
 
@@ -65,7 +65,7 @@ Now, click Load Unpacked.
 
 This will open the file explorer on your computer.
 
-Navigate to the hacksc project directory and open the **client** directory.
+Navigate to the hacksc project directory and open the **client** directory. <- IMPORTANT. Make sure you select and open the client directory (the directory that has a `manifest.json` file in it).
 
 You will now have the extension loaded in chrome.
 
