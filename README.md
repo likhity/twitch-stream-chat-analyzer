@@ -63,7 +63,11 @@ Navigate to the hacksc project directory and open the **client** directory.
 
 You will now have the extension loaded in chrome.
 
-Now, open any active twitch stream in chrome and watch the stream's chat being analyzed in real time with every new chat.
+Now, open any active twitch stream in chrome.
+
+Open the extension. 
+
+You should now see the stream's chat being analyzed in real time and the percentage positivity being updated with every new chat.
 
 ![image](/README_assets/chrome.PNG)
 
@@ -77,4 +81,4 @@ We unfortunately didn't win but we all learned a lot. All of us went outside of 
 
 However, the most important lesson we learned or at least I did, can't speak for everyone: hackathons are really bad unless you go in person.
 
-* *README authored by likhity* *
+*README authored by likhity*
