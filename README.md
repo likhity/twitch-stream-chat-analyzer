@@ -77,7 +77,7 @@ You should now see the stream's chat being analyzed in real time and the percent
 
 ![image](/README_assets/chrome.PNG)
 
-## Reflection
+## Conclusion
 
 Developing this project was an absolute nightmare. Dealing with CORS issues and not being able to connect the browser successfully with the server was the bane of our existence.
 
