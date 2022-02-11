@@ -6,7 +6,7 @@ A chrome extension that analyzes the chat of a twitch stream and displays the pe
 
 ![image](/README_assets/stream.PNG)
 
-It gives twitch stream moderators an easy way to monitor the positivity of their stream without having to look at every chat.
+It gives twitch stream moderators an easy way to monitor the positivity of their stream and make sure the community is not too toxic without having to look at every chat.
 
 ## How It Works
 
@@ -14,7 +14,11 @@ When the client's browser is currently on a twitch stream and the user clicks on
 
 The client will then send a stream of the chat to the server, which will perform a sentiment analysis of the chat stream and send back an update of the percentage positivity. The client will then render the percentage update on to the display in the chrome extension.
 
-The user can input how many chats to analyze at a time. For example, if the user selects 10 as this input, every time a new chat arrives to the server, a new sentiment analysis of the last 10 chats is performed. A sentiment analysis on each single chat and returns the mean of the sentiment of all 10 chats.
+The user can input how many chats to analyze at a time. For example, if the user selects 50 as this input, every time a new chat arrives to the server, a new sentiment analysis of the last 50 chats is performed. A sentiment analysis on each single chat and returns the mean of the sentiment of all 50 chats.
+
+The default number of chats it analyzes is 10.
+
+This algorithm by which the percentage positivity is calculated still needs to be worked on, but it works well enough for demonstration purposes currently.
 
 The server was built using [Flask](https://flask.palletsprojects.com/en/2.0.x/), and all of the client/server communication was done using [Socket.io](https://socket.io/) so that the user gets real-time updates.
 
