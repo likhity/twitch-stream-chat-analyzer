@@ -1,0 +1,7 @@
+$ nltk
+$ emoji
+$ numpy
+$ Flask
+$ Flask-RESTful
+$ Flask-SocketIO
+$ Flask-Cors
